@@ -1,6 +1,8 @@
 package com.superdev.jpa;
 
 import lombok.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
 import javax.persistence.*;
@@ -29,11 +31,18 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
-  @Builder
+   @Builder
   public Member(String username , Team team , Integer age , RoleType roleType) {
     this.username = username;
-    this.team = team;
+    setTeam(team);
     this.age = age;
     this.roleType = roleType;
+  }
+
+  public void setTeam(Team team){
+    this.team = team;
+    if (!team.getMembers().contains(this)) {
+      team.getMembers().add(this);
+    }
   }
 }

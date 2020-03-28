@@ -38,7 +38,7 @@ public class JpaApplication {
 			System.out.println("==========");
 			System.out.println(em.find(Member.class , admin.getId()));
 			System.out.println(em.find(Member.class , member.getId()));
-			System.out.println(em.find(Team.class , team1.getId()));
+			System.out.println(em.find(Team.class , team1.getId()).getMembers());
 			System.out.println("==========");
 
 			tx.commit();//트랜잭션 커밋
