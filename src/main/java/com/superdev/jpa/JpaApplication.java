@@ -33,8 +33,6 @@ public class JpaApplication {
 					.build();
 			em.persist(member);
 
-
-
 			System.out.println("==========");
 			System.out.println(em.find(Member.class , admin.getId()));
 			System.out.println(em.find(Member.class , member.getId()));
