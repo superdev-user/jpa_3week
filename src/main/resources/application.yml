@@ -3,18 +3,19 @@ spring:
     name: digital-asset-management-service
     title: DIGITAL-ASSET-MANAGEMENT-SERVICE
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost/digital_asset?verifyServerCertificate=false&useSSL=false&requireSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: cecil1018
-    password: 1234qwer
+    platform: h2
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
+    database-platform: H2
     show-sql: true
     hibernate:
       ddl-auto: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL55Dialect
+        dialect: org.hibernate.dialect.H2Dialect
         jdbc:
           batch_size: 100
           batch_versioned_data: true

@@ -6,27 +6,32 @@ public class JpaApplication {
 
 	public static void main(String[] args) {
 
-		//엔티티 매니저 팩토리 생성
+
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 		EntityManager em = emf.createEntityManager(); //엔티티 매니저 생성
 
 		EntityTransaction tx = em.getTransaction(); //트랜잭션 기능 획득
 
 		try {
-
-
 			tx.begin(); //트랜잭션 시작
 
-			Team team1 = new Team("팀1");
+			Team team1 = Team.builder()
+					.name("Team1")
+					.build();
+
 			em.persist(team1);
 
-			Member member1 = new Member("회원1");
-			member1.setTeam(team1);
-			em.persist(member1);
+			Member admin = Member.builder()
+					.username("주인").age(28)
+					.team(team1).roleType(RoleType.ADMIN)
+					.build();
+			em.persist(admin);
 
-			Member member2 = new Member("회원2");
-			member2.setTeam(team1);
-			em.persist(member2);
+			Member member = Member.builder()
+					.username("멤버").age(30)
+					.team(team1).roleType(RoleType.USER)
+					.build();
+			em.persist(member);
 
 			tx.commit();//트랜잭션 커밋
 
