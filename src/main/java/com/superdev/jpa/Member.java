@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
+import java.util.concurrent.locks.Lock;
 import javax.persistence.*;
 
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "LOCKER_ID"))
 public class Member {
 
   @Id
@@ -27,15 +29,15 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
-  @ManyToOne
-  @JoinColumn(name = "TEAM_ID" , insertable =  false, updatable = false)
-  private Team team;
+  @OneToOne
+  @JoinColumn(name = "LOCKER_ID")
+  private Locker locker;
 
    @Builder
-  public Member(String username , Integer age , RoleType roleType, Team team) {
+  public Member(String username , Integer age , RoleType roleType , Locker locker) {
     this.username = username;
     this.age = age;
     this.roleType = roleType;
-    this.team = team;
+    this.locker = locker;
   }
 }

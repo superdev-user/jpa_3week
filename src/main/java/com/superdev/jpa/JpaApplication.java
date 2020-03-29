@@ -1,6 +1,7 @@
 package com.superdev.jpa;
 
 import javax.persistence.*;
+import java.util.concurrent.locks.Lock;
 
 public class JpaApplication {
 
@@ -15,35 +16,23 @@ public class JpaApplication {
 		try {
 			tx.begin(); //트랜잭션 시작
 
-			Team team1 = Team.builder()
+			Locker locker = Locker.builder()
 					.name("Team1")
 					.build();
 
 			Member admin = Member.builder()
 					.username("주인")
 					.age(28)
-					.team(team1)
+					.locker(locker)
 					.roleType(RoleType.ADMIN)
 					.build();
 
-			Member member = Member.builder()
-					.username("멤버")
-					.age(30)
-					.team(team1)
-					.roleType(RoleType.USER)
-					.build();
-
-			team1.getMembers().add(admin);
-			team1.getMembers().add(member);
-
 			em.persist(admin);			//INSERT
-			em.persist(member);			//INSERT
-			em.persist(team1);			//INSERT , UPDATE admin , UPDATE member
+			em.persist(locker);			//INSERT , UPDATE admin , UPDATE member
 
 			System.out.println("==========");
 			System.out.println(em.find(Member.class , admin.getId()));
-			System.out.println(em.find(Member.class , member.getId()));
-			System.out.println(em.find(Team.class , team1.getId()).getMembers());
+			System.out.println(em.find(Locker.class , locker.getId()));
 			System.out.println("==========");
 
 			tx.commit();//트랜잭션 커밋
