@@ -42,4 +42,10 @@ public class Member {
     this.age = age;
     this.roleType = roleType;
   }
+
+  //편의 메서드
+  public void addProduct ( Product product) {
+     products.add(product);
+     product.getMembers().add(this);
+  }
 }
