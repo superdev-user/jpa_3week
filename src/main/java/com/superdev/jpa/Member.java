@@ -4,7 +4,9 @@ import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import javax.persistence.*;
 
@@ -28,14 +30,16 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
-  @OneToOne(mappedBy = "member")
-  private Locker locker;
+  @ManyToMany
+  @JoinTable(name = "MEMBER_PRODUCT",
+          joinColumns = @JoinColumn(name="ID"),
+          inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
+  private List<Product> products = new ArrayList<Product>();
 
    @Builder
-  public Member(String username , Integer age , RoleType roleType , Locker locker) {
+  public Member(String username , Integer age , RoleType roleType) {
     this.username = username;
     this.age = age;
     this.roleType = roleType;
-    this.locker = locker;
   }
 }

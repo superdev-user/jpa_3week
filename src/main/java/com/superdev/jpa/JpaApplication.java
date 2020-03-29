@@ -16,25 +16,47 @@ public class JpaApplication {
 		try {
 			tx.begin(); //트랜잭션 시작
 
-			Locker locker = Locker.builder()
-					.name("Team1")
+			Product product = Product.builder()
+					.name("삼성")
+					.build();
+
+			Product product1 = Product.builder()
+					.name("맥북")
 					.build();
 
 			Member admin = Member.builder()
 					.username("주인")
 					.age(28)
-					.locker(locker)
 					.roleType(RoleType.ADMIN)
 					.build();
 
-			locker.setMember(admin);
+			Member admin1 = Member.builder()
+					.username("구매자")
+					.age(32)
+					.roleType(RoleType.USER)
+					.build();
 
-			em.persist(admin);			//INSERT
-			em.persist(locker);			//INSERT , UPDATE admin , UPDATE member
+			admin.getProducts().add(product);
+			admin.getProducts().add(product1);
+
+			admin1.getProducts().add(product);
+			admin1.getProducts().add(product1);
+
+			em.persist(product);
+			em.persist(product1);
+			em.persist(admin);
+			em.persist(admin1);
+
+			em.flush();
+			em.clear();
 
 			System.out.println("==========");
-			System.out.println(em.find(Member.class , admin.getId()));
-			System.out.println(em.find(Locker.class , locker.getId()).getMember());
+			em.find(Member.class , admin.getId())
+					.getProducts().stream().forEach(System.out::println);
+
+			em.find(Member.class , admin1.getId())
+					.getProducts().stream().forEach(System.out::println);
+
 			System.out.println("==========");
 
 			tx.commit();//트랜잭션 커밋
