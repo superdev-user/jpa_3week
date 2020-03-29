@@ -22,7 +22,8 @@ public class Team {
   @Column(name = "NAME")
   private String name;
 
-  @OneToMany(mappedBy = "team")
+  @OneToMany
+  @JoinColumn(name= "TEAM_ID")
   List<Member> members = new ArrayList<Member>();
 
   @Builder
@@ -30,12 +31,4 @@ public class Team {
     this.name = name;
   }
 
-  /* 양쪽다 작성할 경우 방지코드 */
-  //  public void addMember(Member member) {
-//    this.members.add(member);
-//
-//    if (member.getTeam() != this) {
-//      member.setTeam(this);
-//    }
-//  }
 }

@@ -22,27 +22,15 @@ public class Member {
   @Column(name = "NAME", nullable = false, length = 10)
   private String username;
 
-  @ManyToOne
-  @JoinColumn(name = "TEAM_ID")
-  private Team team;
-
-  private Integer age;
+   private Integer age;
 
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
    @Builder
-  public Member(String username , Team team , Integer age , RoleType roleType) {
+  public Member(String username , Integer age , RoleType roleType) {
     this.username = username;
-    setTeam(team);
     this.age = age;
     this.roleType = roleType;
-  }
-
-  public void setTeam(Team team){
-    this.team = team;
-    if (!team.getMembers().contains(this)) {
-      team.getMembers().add(this);
-    }
   }
 }
