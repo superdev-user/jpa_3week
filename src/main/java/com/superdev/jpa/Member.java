@@ -32,9 +32,10 @@ public class Member {
   private Team team;
 
    @Builder
-  public Member(String username , Integer age , RoleType roleType) {
+  public Member(String username , Integer age , RoleType roleType, Team team) {
     this.username = username;
     this.age = age;
     this.roleType = roleType;
+    this.team = team;
   }
 }

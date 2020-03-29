@@ -15,20 +15,22 @@ public class JpaApplication {
 		try {
 			tx.begin(); //트랜잭션 시작
 
+			Team team1 = Team.builder()
+					.name("Team1")
+					.build();
+
 			Member admin = Member.builder()
 					.username("주인")
 					.age(28)
+					.team(team1)
 					.roleType(RoleType.ADMIN)
 					.build();
 
 			Member member = Member.builder()
 					.username("멤버")
 					.age(30)
+					.team(team1)
 					.roleType(RoleType.USER)
-					.build();
-
-			Team team1 = Team.builder()
-					.name("Team1")
 					.build();
 
 			team1.getMembers().add(admin);
