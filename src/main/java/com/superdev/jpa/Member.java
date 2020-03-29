@@ -27,6 +27,10 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
+  @ManyToOne
+  @JoinColumn(name = "TEAM_ID" , insertable =  false, updatable = false)
+  private Team team;
+
    @Builder
   public Member(String username , Integer age , RoleType roleType) {
     this.username = username;
