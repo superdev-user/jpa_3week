@@ -12,13 +12,14 @@ import javax.persistence.*;
 
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
 public class Member {
 
   @Id
-  @Column(name = "ID")
+  @Column(name = "MEMBER_ID")
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
@@ -30,14 +31,7 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
-   @Builder
-  public Member(String username , Integer age , RoleType roleType) {
-    this.username = username;
-    this.age = age;
-    this.roleType = roleType;
-  }
-
-  @OneToMany(mappedBy = "member")
-  private List<MemberProduct> memberProducts;
+   @OneToMany(mappedBy = "member")
+  private List<OrderMemberProduct> orders = new ArrayList<OrderMemberProduct>();
 
 }

@@ -1,5 +1,6 @@
 package com.superdev.jpa;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.concurrent.locks.Lock;
 
@@ -16,33 +17,25 @@ public class JpaApplication {
 		try {
 			tx.begin(); //트랜잭션 시작
 
-			Product product = Product.builder()
-					.name("삼성")
-					.build();
+			Product product = new Product();
+			product.setName("삼성");
 
-			Member member = Member.builder()
-					.username("구매자")
-					.age(28)
-					.roleType(RoleType.USER)
-					.build();
+			Member member = new Member();
+			member.setUsername("구매자");
+			member.setAge(28);
+			member.setRoleType(RoleType.USER);
 
 			em.persist(product);
 			em.persist(member);
 
-			MemberProduct memberProduct = MemberProduct.builder()
-					.member(member)
-					.product(product)
-					.orderAmount(3)
-					.build();
+			OrderMemberProduct order = new OrderMemberProduct();
+			order.setMember(member);
+			order.setProduct(product);
+			order.setOrderAmount(10);
 
-			em.persist(memberProduct);
+			em.persist(order);
 
-			MemberProductId memberProductId = MemberProductId.builder()
-					.member(member.getId())
-					.product(product.getId()).build();
-
-
-			MemberProduct findMemberProduct = em.find(MemberProduct.class , memberProductId);
+			OrderMemberProduct findMemberProduct = em.find(OrderMemberProduct.class , order.getId());
 
 			System.out.println("==========");
 			System.out.println(findMemberProduct.getMember());

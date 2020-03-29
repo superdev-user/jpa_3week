@@ -7,15 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
 public class Product {
-
-    @Builder
-    public Product(String name) {
-        this.name = name;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +19,7 @@ public class Product {
     private Long id;
 
     private String name;
+
 
 
 }
