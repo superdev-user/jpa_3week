@@ -27,12 +27,14 @@ public class JpaApplication {
 					.roleType(RoleType.ADMIN)
 					.build();
 
+			locker.setMember(admin);
+
 			em.persist(admin);			//INSERT
 			em.persist(locker);			//INSERT , UPDATE admin , UPDATE member
 
 			System.out.println("==========");
 			System.out.println(em.find(Member.class , admin.getId()));
-			System.out.println(em.find(Locker.class , locker.getId()));
+			System.out.println(em.find(Locker.class , locker.getId()).getMember());
 			System.out.println("==========");
 
 			tx.commit();//트랜잭션 커밋
