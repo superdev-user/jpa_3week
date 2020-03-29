@@ -20,37 +20,36 @@ public class JpaApplication {
 					.name("삼성")
 					.build();
 
-			Product product1 = Product.builder()
-					.name("맥북")
-					.build();
-
-			Member admin = Member.builder()
-					.username("주인")
-					.age(28)
-					.roleType(RoleType.ADMIN)
-					.build();
-
-			Member admin1 = Member.builder()
+			Member member = Member.builder()
 					.username("구매자")
-					.age(32)
+					.age(28)
 					.roleType(RoleType.USER)
 					.build();
 
-			admin.addProduct(product);
-			admin.addProduct(product1);
-
-			admin1.addProduct(product);
-
 			em.persist(product);
-			em.persist(product1);
-			em.persist(admin);
-			em.persist(admin1);
+			em.persist(member);
+
+			MemberProduct memberProduct = MemberProduct.builder()
+					.member(member)
+					.product(product)
+					.orderAmount(3)
+					.build();
+
+			em.persist(memberProduct);
+
+			MemberProductId memberProductId = MemberProductId.builder()
+					.member(member.getId())
+					.product(product.getId()).build();
+
+
+			MemberProduct findMemberProduct = em.find(MemberProduct.class , memberProductId);
 
 			System.out.println("==========");
-			em.find(Product.class , 1L).getMembers().stream().forEach(System.out::println);
-
-			em.find(Product.class , 2L).getMembers().stream().forEach(System.out::println);
+			System.out.println(findMemberProduct.getMember());
+			System.out.println(findMemberProduct.getProduct());
+			System.out.println(findMemberProduct.getOrderAmount());
 			System.out.println("==========");
+
 
 			tx.commit();//트랜잭션 커밋
 		} catch (Exception e) {

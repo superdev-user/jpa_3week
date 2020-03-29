@@ -8,8 +8,14 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @Entity
 public class Product {
+
+    @Builder
+    public Product(String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,11 +24,5 @@ public class Product {
 
     private String name;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Member> members = new ArrayList<Member>();
 
-    @Builder
-    public Product(String name) {
-            this.name = name;
-    }
 }

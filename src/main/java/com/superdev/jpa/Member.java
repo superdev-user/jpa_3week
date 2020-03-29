@@ -30,12 +30,6 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
-  @ManyToMany
-  @JoinTable(name = "MEMBER_PRODUCT",
-          joinColumns = @JoinColumn(name="ID"),
-          inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
-  private List<Product> products = new ArrayList<Product>();
-
    @Builder
   public Member(String username , Integer age , RoleType roleType) {
     this.username = username;
@@ -43,9 +37,7 @@ public class Member {
     this.roleType = roleType;
   }
 
-  //편의 메서드
-  public void addProduct ( Product product) {
-     products.add(product);
-     product.getMembers().add(this);
-  }
+  @OneToMany(mappedBy = "member")
+  private List<MemberProduct> memberProducts;
+
 }
