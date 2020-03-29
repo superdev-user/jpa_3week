@@ -13,7 +13,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "LOCKER_ID"))
 public class Member {
 
   @Id
@@ -29,8 +28,7 @@ public class Member {
   @Enumerated(EnumType.STRING)
   private RoleType roleType;
 
-  @OneToOne
-  @JoinColumn(name = "LOCKER_ID")
+  @OneToOne(mappedBy = "member")
   private Locker locker;
 
    @Builder
